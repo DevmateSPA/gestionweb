@@ -1,6 +1,7 @@
 # Entornos virtuales
 venv/
 env/
+imprenta/
 .imprenta/
 .imprenta-env/
 .imprenta/
