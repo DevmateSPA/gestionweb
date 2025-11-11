@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h1>Bienvenido {{ session.get('usuario_nombre', 'Usuario') }} 👋</h1>
+    <p class="mt-3">Este es el panel principal de tu aplicación.</p>
+    <a href="{{ url_for('banco.index') }}" class="btn btn-primary mt-4">Ver Bancos</a>
+</div>
+{% endblock %}

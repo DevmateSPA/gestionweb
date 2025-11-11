@@ -1,0 +1,48 @@
+# Entornos virtuales
+venv/
+env/
+.imprenta/
+.imprenta-env/
+.imprenta/
+
+# Archivos compilados de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Archivos de configuración locales
+*.env
+config.py
+
+# Archivos temporales o de logs
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Archivos de base de datos locales (si usas SQLite)
+*.sqlite3
+*.db
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos de IDEs o editores
+.vscode/
+.idea/
+*.code-workspace
+
+# Archivos generados por Flask
+instance/
+*.egg-info/
+dist/
+build/
+
+# Dependencias descargadas
+*.egg
+.eggs/
+pip-wheel-metadata/
+
+# Archivos del servidor o cache de Werkzeug
+flask_session/

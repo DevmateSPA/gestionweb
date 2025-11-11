@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar Banco</title>
+</head>
+<body>
+    <h1>Editar Banco</h1>
+    <form method="post">
+        <label>Código:</label><br>
+        <input type="text" name="codigo" value="{{ banco.codigo }}" required><br><br>
+        <label>Descripción:</label><br>
+        <input type="text" name="descripcion" value="{{ banco.descripcion }}" required><br><br>
+        <button type="submit">Actualizar</button>
+    </form>
+    <br>
+    <a href="{{ url_for('banco.index') }}">Volver</a>
+</body>
+</html>
