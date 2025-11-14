@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block title %}{{ accion }} Factura{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ accion }} Factura</h2>
+
+    <form method="POST">
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Folio</label>
+                <input type="text" class="form-control" name="folio" value="{{ factura.folio if factura else '' }}" required>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Fecha</label>
+                <input type="date" class="form-control" name="fecha" value="{{ factura.fecha.strftime('%Y-%m-%d') if factura else '' }}" required>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Rut Cliente</label>
+                <input type="text" class="form-control" name="rut_cliente" value="{{ factura.rut_cliente if factura else '' }}" required>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Orden de Trabajo</label>
+            <input type="text" class="form-control" name="orden_trabajo" value="{{ factura.orden_trabajo if factura else '' }}">
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Fecha Vencimiento</label>
+                <input type="text" class="form-control" name="fecha_vencimiento" value="{{ factura.fecha_vencimiento if factura else '' }}">
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Tipo Crédito</label>
+                <input type="number" class="form-control" name="tipo_credito" value="{{ factura.tipo_credito if factura else 0 }}">
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Neto</label>
+                <input type="number" class="form-control" name="neto" value="{{ factura.neto if factura else 0 }}">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label class="form-label">IVA</label>
+                <input type="number" class="form-control" name="iva" value="{{ factura.iva if factura else 0 }}">
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Total</label>
+                <input type="number" class="form-control" name="total" value="{{ factura.total if factura else 0 }}">
+            </div>
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Nota de Crédito</label>
+                <input type="number" class="form-control" name="notacredito" value="{{ factura.notacredito if factura else 0 }}">
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">{{ accion }}</button>
+        <a href="{{ url_for('factura.index') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

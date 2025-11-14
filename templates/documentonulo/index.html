@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}Documentos Nulos{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Documentos Nulos</h2>
+    <a href="{{ url_for('documentonulo.create') }}" class="btn btn-success mb-3">➕ Nuevo Documento</a>
+
+    <!-- 🔍 Buscador -->
+    <div class="mb-3">
+        <input type="text" id="buscarDocumento" class="form-control" placeholder="Buscar documento por tipo, folio o glosa...">
+    </div>
+
+    <div class="table-container">
+        <table class="table table-striped" id="tablaDocumentos">
+            <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Folio</th>
+                    <th>Glosa</th>
+                    <th>Fecha</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for doc in documentos %}
+                <tr>
+                    <td>{{ doc.tipo }}</td>
+                    <td>{{ doc.folio }}</td>
+                    <td>{{ doc.glosa }}</td>
+                    <td>{{ doc.fecha.strftime('%d-%m-%Y') }}</td>
+                    <td>
+                        <div class="action-menu">
+                            <button class="action-btn" type="button">⋮</button>
+                            <div class="action-dropdown">
+                                <a href="{{ url_for('documentonulo.update', id=doc.id) }}">✏️ Editar</a>
+                                <a href="{{ url_for('documentonulo.delete', id=doc.id) }}" class="btn-eliminar text-danger">🗑️ Eliminar</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 🔎 Filtro de búsqueda -->
+<script>
+document.getElementById('buscarDocumento').addEventListener('keyup', function() {
+    let filtro = this.value.toLowerCase();
+    document.querySelectorAll('#tablaDocumentos tbody tr').forEach(fila => {
+        let texto = fila.textContent.toLowerCase();
+        fila.style.display = texto.includes(filtro) ? '' : 'none';
+    });
+});
+
+// 🧨 Confirmación con SweetAlert2
+document.querySelectorAll('.btn-eliminar').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const link = this.href;
+
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Esta acción no se puede deshacer.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then(result => {
+            if (result.isConfirmed) {
+                window.location.href = link;
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

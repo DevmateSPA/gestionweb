@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}Facturas{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Facturas</h2>
+    <a href="{{ url_for('factura.create') }}" class="btn btn-success mb-3">➕ Nueva Factura</a>
+
+    <input type="text" id="buscarFactura" class="form-control mb-3" placeholder="Buscar por folio, cliente u orden...">
+
+    <div class="table-container">
+        <table class="table table-striped" id="tablaFacturas">
+            <thead>
+                <tr>
+                    <th>Folio</th>
+                    <th>Fecha</th>
+                    <th>Rut Cliente</th>
+                    <th>Orden de Trabajo</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for factura in facturas %}
+                <tr>
+                    <td>{{ factura.folio }}</td>
+                    <td>{{ factura.fecha.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ factura.rut_cliente }}</td>
+                    <td>{{ factura.orden_trabajo }}</td>
+                    <td>${{ factura.total }}</td>
+                    <td>
+                        <div class="action-menu">
+                            <button class="action-btn">⋮</button>
+                            <div class="action-dropdown">
+                                <a href="{{ url_for('factura.update', id=factura.id) }}">✏️ Editar</a>
+                                <a href="{{ url_for('factura.delete', id=factura.id) }}" class="btn-eliminar text-danger">🗑️ Eliminar</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.querySelectorAll('.btn-eliminar').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const link = this.href;
+        Swal.fire({
+            title: '¿Eliminar factura?',
+            text: 'Esta acción no se puede deshacer.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then(result => {
+            if (result.isConfirmed) window.location.href = link;
+        });
+    });
+});
+</script>
+{% endblock %}

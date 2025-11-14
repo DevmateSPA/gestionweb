@@ -8,7 +8,6 @@ bp = Blueprint('banco', __name__, template_folder='../templates/banco')
 def index():
     bancos = Banco.query.all()
     return render_template('banco/index.html', bancos=bancos)
-
 @bp.route('/create', methods=['GET', 'POST'])
 def create():
     if request.method == 'POST':
@@ -20,7 +19,8 @@ def create():
         db.session.add(nuevo_banco)
         db.session.commit()
         return redirect(url_for('banco.index'))
-    return render_template('banco/agregar.html')
+    return render_template('banco/form.html', banco=None)
+
 
 @bp.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
@@ -31,7 +31,7 @@ def update(id):
         banco.direccion = request.form['direccion']
         db.session.commit()
         return redirect(url_for('banco.index'))
-    return render_template('banco/modificar.html', banco=banco)
+    return render_template('banco/form.html', banco=banco)
 
 @bp.route('/delete/<int:id>')
 def delete(id):

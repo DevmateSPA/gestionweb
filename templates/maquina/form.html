@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}{{ accion }} Máquina{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>{{ accion }} Máquina</h2>
+
+    <form method="POST">
+        <div class="mb-3">
+            <label class="form-label">Código</label>
+            <input type="text" name="codigo" class="form-control" value="{{ maquina.codigo if maquina else '' }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <input type="text" name="descripcion" class="form-control" value="{{ maquina.descripcion if maquina else '' }}" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{{ url_for('maquina.index') }}" class="btn btn-secondary">Volver</a>
+    </form>
+</div>
+{% endblock %}

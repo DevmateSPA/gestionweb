@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}Notas de Crédito{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Notas de Crédito</h2>
+    <a href="{{ url_for('notacredito.create') }}" class="btn btn-success mb-3">➕ Nueva Nota</a>
+
+    <div class="mb-3">
+        <input type="text" id="buscarNota" class="form-control" placeholder="Buscar por folio, cliente o factura...">
+    </div>
+
+    <div class="table-container">
+        <table class="table table-striped" id="tablaNotas">
+            <thead>
+                <tr>
+                    <th>Folio</th>
+                    <th>Rut Cliente</th>
+                    <th>Factura</th>
+                    <th>Total</th>
+                    <th>Fecha</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for nota in notas %}
+                <tr>
+                    <td>{{ nota.folio }}</td>
+                    <td>{{ nota.rut_cliente }}</td>
+                    <td>{{ nota.factura }}</td>
+                    <td>{{ nota.total }}</td>
+                    <td>{{ nota.fecha.strftime('%Y-%m-%d') }}</td>
+                    <td>
+                        <div class="action-menu">
+                            <button class="action-btn">⋮</button>
+                            <div class="action-dropdown">
+                                <a href="{{ url_for('notacredito.update', id=nota.id) }}">✏️ Editar</a>
+                                <a href="{{ url_for('notacredito.delete', id=nota.id) }}" class="btn-eliminar text-danger">🗑️ Eliminar</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 🔍 Buscador y SweetAlert -->
+<script>
+document.getElementById('buscarNota').addEventListener('keyup', function() {
+    let filtro = this.value.toLowerCase();
+    document.querySelectorAll('#tablaNotas tbody tr').forEach(fila => {
+        let texto = fila.textContent.toLowerCase();
+        fila.style.display = texto.includes(filtro) ? '' : 'none';
+    });
+});
+
+document.querySelectorAll('.btn-eliminar').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        let link = this.href;
+
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Esta acción no se puede deshacer",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = link;
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

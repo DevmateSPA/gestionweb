@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ accion }} Grupo{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>{{ accion }} Grupo</h2>
+
+    <form method="POST">
+        <div class="mb-3">
+            <label class="form-label">Código</label>
+            <input type="text" name="codigo" class="form-control" value="{{ grupo.codigo if grupo else '' }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <input type="text" name="descripcion" class="form-control" value="{{ grupo.descripcion if grupo else '' }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{{ url_for('grupo.index') }}" class="btn btn-secondary">Volver</a>
+    </form>
+</div>
+{% endblock %}

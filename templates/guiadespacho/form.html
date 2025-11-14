@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Editar' if guia else 'Nueva' }} Guía de Despacho{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ 'Editar' if guia else 'Nueva' }} Guía de Despacho</h2>
+
+    <form method="POST">
+        <div class="mb-3">
+            <label for="folio" class="form-label">Folio</label>
+            <input type="text" class="form-control" id="folio" name="folio"
+                   value="{{ guia.folio if guia else '' }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="rut_cliente" class="form-label">Rut Cliente</label>
+            <input type="text" class="form-control" id="rut_cliente" name="rut_cliente"
+                   value="{{ guia.rut_cliente if guia else '' }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="orden_trabajo" class="form-label">Orden de Trabajo</label>
+            <input type="text" class="form-control" id="orden_trabajo" name="orden_trabajo"
+                   value="{{ guia.orden_trabajo if guia else '' }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="factura" class="form-label">Factura</label>
+            <input type="text" class="form-control" id="factura" name="factura"
+                   value="{{ guia.factura if guia else '' }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="memo" class="form-label">Memo</label>
+            <textarea class="form-control" id="memo" name="memo" rows="3">{{ guia.memo if guia else '' }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="fecha" class="form-label">Fecha</label>
+            <input type="date" class="form-control" id="fecha" name="fecha"
+                   value="{{ guia.fecha.strftime('%Y-%m-%d') if guia else '' }}" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            {{ 'Actualizar' if guia else 'Crear' }}
+        </button>
+        <a href="{{ url_for('guia.index') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

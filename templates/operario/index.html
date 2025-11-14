@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
-
-{% block title %}Bancos{% endblock %}
+{% block title %}Operarios{% endblock %}
 
 {% block content %}
 <div class="container">
-    <h2>Información de Bancos</h2>
-    <a href="{{ url_for('banco.create') }}" class="btn btn-success mb-3">➕ Nuevo Banco</a>
+    <h2>Operarios</h2>
+    <a href="{{ url_for('operario.create') }}" class="btn btn-success mb-3">➕ Nuevo Operario</a>
 
     <!-- 🔍 Buscador -->
     <div class="mb-3">
-        <input type="text" id="buscarBanco" class="form-control" placeholder="Buscar banco por código, nombre o dirección...">
+        <input type="text" id="buscarOperario" class="form-control" placeholder="Buscar operario por código o nombre...">
     </div>
+
     <div class="table-container">
-        <table id="tablaBancos" class="table table-striped">
+        <table id="tablaOperarios" class="table table-striped">
             <thead>
                 <tr>
                     <th>Código</th>
@@ -21,16 +21,16 @@
                 </tr>
             </thead>
             <tbody>
-                {% for banco in bancos %}
+                {% for operario in operarios %}
                 <tr>
-                    <td>{{ banco.codigo }}</td>
-                    <td>{{ banco.nombre }}</td>
+                    <td>{{ operario.codigo }}</td>
+                    <td>{{ operario.nombre }}</td>
                     <td>
                         <div class="action-menu">
                             <button class="action-btn" type="button">⋮</button>
                             <div class="action-dropdown">
-                                <a href="{{ url_for('banco.update', id=banco.id) }}">✏️ Editar</a>
-                                <a href="{{ url_for('banco.delete', id=banco.id) }}" class="text-danger btn-eliminar">🗑️ Eliminar</a>
+                                <a href="{{ url_for('operario.update', id=operario.id) }}">✏️ Editar</a>
+                                <a href="{{ url_for('operario.delete', id=operario.id) }}" class="btn-eliminar text-danger">🗑️ Eliminar</a>
                             </div>
                         </div>
                     </td>
@@ -42,27 +42,23 @@
 </div>
 
 <script>
-document.getElementById('buscarBanco').addEventListener('keyup', function() {
+document.getElementById('buscarOperario').addEventListener('keyup', function() {
     let filtro = this.value.toLowerCase();
-    let filas = document.querySelectorAll('#tablaBancos tbody tr');
-
+    let filas = document.querySelectorAll('#tablaOperarios tbody tr');
     filas.forEach(fila => {
         let texto = fila.textContent.toLowerCase();
         fila.style.display = texto.includes(filtro) ? '' : 'none';
     });
 });
-</script>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
+// Confirmación SweetAlert
 document.querySelectorAll('.btn-eliminar').forEach(btn => {
     btn.addEventListener('click', function(e) {
-        e.preventDefault(); 
+        e.preventDefault();
         let link = this.href;
-
         Swal.fire({
-            title: '¿Estás seguro?',
-            text: "¡No podrás revertir esto!",
+            title: '¿Eliminar operario?',
+            text: "Esta acción no se puede deshacer",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
@@ -71,7 +67,7 @@ document.querySelectorAll('.btn-eliminar').forEach(btn => {
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = link; 
+                window.location.href = link;
             }
         });
     });

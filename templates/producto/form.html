@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}{{ accion }} Producto{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>{{ accion }} Producto</h2>
+
+    <form method="POST">
+        <div class="mb-3">
+            <label class="form-label">Código</label>
+            <input type="text" name="codigo" class="form-control" value="{{ producto.codigo if producto else '' }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <input type="text" name="descripcion" class="form-control" value="{{ producto.descripcion if producto else '' }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Grupo</label>
+            <input type="number" name="grupo" class="form-control" value="{{ producto.grupo if producto else '' }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Stock mínimo</label>
+            <input type="number" name="stmi" class="form-control" value="{{ producto.stmi if producto else '' }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Papel</label>
+            <input type="number" name="papel" class="form-control" value="{{ producto.papel if producto else '' }}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Dimensiones</label>
+            <input type="number" name="dime" class="form-control" value="{{ producto.dime if producto else '' }}" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{{ url_for('producto.index') }}" class="btn btn-secondary">Volver</a>
+    </form>
+</div>
+{% endblock %}

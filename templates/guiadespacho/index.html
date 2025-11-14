@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %}Guías de Despacho{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Guías de Despacho</h2>
+    <a href="{{ url_for('guia.create') }}" class="btn btn-success mb-3">➕ Nueva Guía</a>
+
+    <div class="mb-3">
+        <input type="text" id="buscarGuia" class="form-control" placeholder="Buscar guía por folio, cliente o factura...">
+    </div>
+
+    <table class="table table-striped" id="tablaGuias">
+        <thead>
+            <tr>
+                <th>Folio</th>
+                <th>Rut Cliente</th>
+                <th>Orden de Trabajo</th>
+                <th>Factura</th>
+                <th>Fecha</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for guia in guias %}
+            <tr>
+                <td>{{ guia.folio }}</td>
+                <td>{{ guia.rut_cliente }}</td>
+                <td>{{ guia.orden_trabajo }}</td>
+                <td>{{ guia.factura }}</td>
+                <td>{{ guia.fecha.strftime('%Y-%m-%d') }}</td>
+                <td>
+                    <div class="action-menu">
+                        <button class="action-btn" type="button">⋮</button>
+                        <div class="action-dropdown">
+                            <a href="{{ url_for('guia.update', id=guia.id) }}">✏️ Editar</a>
+                            <a href="{{ url_for('guia.delete', id=guia.id) }}" class="btn-eliminar text-danger">🗑️ Eliminar</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.getElementById('buscarGuia').addEventListener('keyup', function() {
+    let filtro = this.value.toLowerCase();
+    document.querySelectorAll('#tablaGuias tbody tr').forEach(fila => {
+        fila.style.display = fila.textContent.toLowerCase().includes(filtro) ? '' : 'none';
+    });
+});
+
+document.querySelectorAll('.btn-eliminar').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        let link = this.href;
+        Swal.fire({
+            title: '¿Eliminar esta guía?',
+            text: "Esta acción no se puede deshacer",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then(result => {
+            if (result.isConfirmed) window.location.href = link;
+        });
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Formulario Nota de Crédito{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>{{ nota and 'Editar Nota de Crédito' or 'Nueva Nota de Crédito' }}</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="mb-3">{{ form.folio.label }} {{ form.folio(class="form-control") }}</div>
+        <div class="mb-3">{{ form.rut_cliente.label }} {{ form.rut_cliente(class="form-control") }}</div>
+        <div class="mb-3">{{ form.factura.label }} {{ form.factura(class="form-control") }}</div>
+        <div class="mb-3">{{ form.neto.label }} {{ form.neto(class="form-control") }}</div>
+        <div class="mb-3">{{ form.iva.label }} {{ form.iva(class="form-control") }}</div>
+        <div class="mb-3">{{ form.total.label }} {{ form.total(class="form-control") }}</div>
+        <div class="mb-3">{{ form.memoria.label }} {{ form.memoria(class="form-control") }}</div>
+        <div class="mb-3">{{ form.fecha.label }} {{ form.fecha(class="form-control") }}</div>
+
+        <button type="submit" class="btn btn-primary">{{ form.submit.label.text }}</button>
+        <a href="{{ url_for('notacredito.index') }}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}
